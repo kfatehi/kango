@@ -1,6 +1,6 @@
 module Kango
   def self.install!
-    zipfile = "#{KANGO_FRAMEWORK}.zip"
+    zipfile = File.expand_path(File.join("~", 'kango-framework.zip'))
     puts "Downloading Kango Framework to #{zipfile}..."
     require 'open-uri'
     File.open(zipfile, 'wb') do |file|
@@ -10,7 +10,7 @@ module Kango
     end
     puts "Download complete! Extracting..."
     `unzip #{zipfile} -d #{KANGO_FRAMEWORK}`
-    if framework_exists?
+    if Kango.framework_exists?
       FileUtils.rm zipfile
       puts "Kango Framework is ready. You can now rake build"
     else

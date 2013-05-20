@@ -3,12 +3,12 @@ require 'thor'
 
 module Kango
   KANGO_FRAMEWORK_URL = "http://kangoextensions.com/kango/kango-framework-latest.zip"
-  KANGO_FRAMEWORK = "kango-framework"
+  KANGO_FRAMEWORK = File.expand_path(File.join('~', 'kango-framework'))
 
   def self.framework_exists?
     File.directory? KANGO_FRAMEWORK
   end
-
+  
   class Tasks < Thor    
     desc "install", "Install the kango framework"
     def install
@@ -23,7 +23,7 @@ module Kango
     desc 'compile', 'Compile coffeescript userscripts into common as javascript'
     def compile
       require 'coffee-script'
-      Dir.glob('src/coffee/**/*.coffee') do |file|
+      Dir.glob('coffee/**/*.coffee') do |file|
         script = file.gsub(/(^coffee|coffee$)/, 'js').split('/').last
         path = Pathname.new('src/common').join(script)
         puts "[   INFO] Compiling #{file} to #{path.to_s}"
@@ -38,10 +38,25 @@ module Kango
     desc 'build', 'Build the extensions with Kango'
     def build
       self.compile
-      if Kango.framework_exists?
-        `python ./#{KANGO_FRAMEWORK}/kango.py build .`
-      else
-        puts "Kango Framework is missing. Install it with 'rake kango:install"
+      ensure_framework do
+        `python #{KANGO_FRAMEWORK}/kango.py build .`
+      end
+    end
+
+    desc 'create', 'Create a new kango project'
+    def create name
+      require 'kango/templates'
+      ensure_framework do
+        path = File.expand_path(File.join(Dir.pwd, name))
+        puts "Creating Kango project at #{path}"
+        `echo #{name} | python #{KANGO_FRAMEWORK}/kango.py create #{path}`
+        File.open(File.join(path, 'Gemfile'), 'w') do |gemfile|
+          gemfile.puts Kango::Templates.gemfile
+        end
+        FileUtils.mkdir File.join(path, 'coffee')
+        File.open(File.join(path, 'coffee', 'main.coffee'), 'w') do |main|
+          main.puts Kango::Templates.main_coffee
+        end
       end
     end
 
@@ -64,6 +79,16 @@ module Kango
         end
       end
       comment
+    end
+
+    ##
+    # Calls the block only if the framework exists
+    def ensure_framework &block
+      if Kango.framework_exists?
+        block.call
+      else
+        puts "Kango Framework is missing. Install it with 'kango install'"
+      end
     end
   end
 end
