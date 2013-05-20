@@ -1,3 +1,4 @@
 #!/usr/bin/env ruby
+require 'kango'
 
-puts "hi"
+Kango::Tasks.start

@@ -1,6 +1,6 @@
 # Kango
 
-TODO: Write a gem description
+Wrapper and task runner for the [Kango Framework](http://kangoextensions.com)
 
 ## Installation
 
@@ -18,7 +18,10 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+`kango docs` will take you to http://kangoextensions.com/docs/index.html
+`kango install` will download and install kango framework
+`kango create` will create a browser extension (not implemented, do this yourself)
+`kango build` will compile your coffeescript and use kango to compile
 
 ## Contributing
 

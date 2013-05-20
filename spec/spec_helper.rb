@@ -1,6 +1,10 @@
 require 'kango'
 
 PROJECT_DIR = File.join(Dir.pwd, 'my_extension')
+def erase_fixture_project
+  FileUtils.rm_r(PROJECT_DIR) if File.exists?(PROJECT_DIR)
+end
+
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
@@ -14,10 +18,10 @@ RSpec.configure do |config|
   config.order = 'random'
 
   config.before(:suite) do
-    FileUtils.mkdir PROJECT_DIR
+    erase_fixture_project
   end
 
   config.after(:suite) do
-    FileUtils.rm_r PROJECT_DIR
+    erase_fixture_project
   end
 end
