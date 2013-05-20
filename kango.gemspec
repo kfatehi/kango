@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["keyvanfatehi@gmail.com"]
   spec.description   = %q{Wraps the brilliant Kango Framework with ruby niceties}
   spec.summary       = %q{Write browser extensions with Kango & Coffeescript}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/keyvanfatehi/kango"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
