@@ -24,8 +24,11 @@ Or install it yourself as:
 ## Usage
 
 `kango docs` will take you to http://kangoextensions.com/docs/index.html
+
 `kango install` will download and install kango framework into your home directory
+
 `kango create` wraps kango's create command, ready for coffeescript via this gem
+
 `kango build` will compile your coffeescript and use KangoFramework to build 
 
 ## Example
