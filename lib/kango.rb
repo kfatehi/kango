@@ -2,10 +2,20 @@ require "kango/version"
 require 'kango/tasks'
 
 module Kango
-  KANGO_FRAMEWORK_URL = "http://kangoextensions.com/kango/kango-framework-latest.zip"
-  KANGO_FRAMEWORK = File.expand_path(File.join('~', 'kango-framework'))
+  module Framework
+    URL = "http://kangoextensions.com/kango/kango-framework-latest.zip"
+    PATH = File.expand_path(File.join('~', 'kango-framework'))
 
-  def self.framework_exists?
-    File.directory? KANGO_FRAMEWORK
+    def self.exists?
+      File.directory? Kango::Framework::PATH
+    end
+
+    def self.build!
+      `python #{Kango::Framework::PATH}/kango.py build .`
+    end
+
+    def self.create_project! name, path
+      `echo #{name} | python #{Kango::Framework::PATH}/kango.py create #{path}`
+    end
   end
 end
