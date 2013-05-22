@@ -1,5 +1,6 @@
 require "kango/version"
 require 'thor'
+require 'pathname'
 
 module Kango
   KANGO_FRAMEWORK_URL = "http://kangoextensions.com/kango/kango-framework-latest.zip"
