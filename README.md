@@ -31,6 +31,8 @@ Or install it yourself as:
 
 `kango build` will compile your coffeescript and use KangoFramework to build 
 
+`kango watch` will watch your project and autobuild on change
+
 ## Example
 
 ```bash
@@ -42,6 +44,10 @@ bundle                    # bundle this gem so you can build
 vim coffee/main.coffee    # write coffeescript here!
 kango build               # compile the coffeescript and build with the Kango Framework
 ```
+
+## ExtensionsReloader
+
+`kango watch reload.extensions` calls open -a '/Applications/Google\ Chrome\ Canary.app' 'http://reload.extensions', which works if you're on Mac, using Chrome Canary, and have ExtensionsReloader installed.
 
 ## Contributing
 
