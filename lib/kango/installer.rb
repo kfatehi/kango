@@ -33,7 +33,12 @@ module Kango
           return
         end
         if Kango::Framework.exists?
-          FileUtils.rm zipfile
+          begin
+            FileUtils.rm zipfile
+          rescue Errno::EACCES => e
+            puts "Permission denied when trying to delete download zip."
+            puts "Remove #{zipfile} manually."
+          end
           puts "Kango Framework is ready. You can now 'kango build'"
         else
           puts "Something went wrong... probably could not download Kango Framework"
