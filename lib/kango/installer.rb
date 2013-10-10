@@ -12,8 +12,26 @@ module Kango
             file.write download.read
           end
         end
+        require 'zip'
         puts "Download complete! Extracting..."
-        `unzip #{zipfile} -d #{Kango::Framework::PATH}`
+        begin
+          Zip::File.open(zipfile) do |zip|
+            zip.each do |zipentry|
+              entryname = Kango::Framework::PATH + "/" + zipentry.to_s
+              FileUtils.mkdir_p entryname.rpartition("/").first
+              File.open(entryname, 'w') do |f|
+                f.write zip.get_input_stream(zipentry).read
+              end
+            end
+            zip.close
+            puts "Extraction complete! Cleaning up..."
+          end
+        rescue Errno::EACCES => e
+          puts "Permission denied. Ensure your home directory is writable."
+          FileUtils.rm_f zipfile
+          FileUtils.rm_rf Kango::Framework::PATH
+          return
+        end
         if Kango::Framework.exists?
           FileUtils.rm zipfile
           puts "Kango Framework is ready. You can now 'kango build'"
