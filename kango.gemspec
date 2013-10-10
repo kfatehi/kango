@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'coffee-script', '~> 2.2.0'
   spec.add_runtime_dependency 'launchy'
   spec.add_runtime_dependency 'directory_watcher', "~> 1.4.1"
+  spec.add_runtime_dependency 'rubyzip', '1.0.0'
 end
